@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>pokeapi</title>
+
+</head>
+<body>
+    <section>
+        <form onsubmit="buscarPodekemon()">
+            <label for="pokemon">Pokemon: </label>
+            <input type="text" id="nombre">
+            <button type="submit">Buscar</button>
+            <div id="resultado"></div>
+        </form>
+        
+    </section>
+</body>
+</html>
+<script>
+    function buscarPodekemon(){
+        
+        let nombre = document.getElementById('nombre').value;
+        const api = `https://pokeapi.co/api/v2/pokemon/${nombre}`;
+        
+        fetch(api)
+        .then (response => response.json())
+        .then(data => {
+           //console.log(data);
+            
+            
+           var v = data.abilities;
+           for(var i = 0; i<v.length; i++){
+            console.log("estas son sus habilidades "+data.abilities[i].ability.name);
+            resultado.innerHTML += `<li>${data.abilities[i].ability.name}<li> `;
+           }
+           const img = document.createElement('img');
+           img.src = data.sprites.front_default;
+           const div = document.createElement('div');
+           div.appendChild(img);
+           var r =  document.getElementById("resultado");
+           r.appendChild(div);
+         
+        })
+        event.preventDefault();
+       
+
+        
+    }
+
+</script>
